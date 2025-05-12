@@ -3,7 +3,7 @@
 module testbench();
 
   localparam CLOCKS_PER_PULSE = 4;
-  reg [7:0] data_in = 8'b00000001;  // Đảm bảo data_in là 8 bit
+  reg [7:0] data_in = 8'b00000001; 
   reg clk = 0;
   reg rstn = 0;
   reg enable = 1;
@@ -31,12 +31,12 @@ module testbench();
       .rstn(rstn)
     );
 
-  // Tạo tín hiệu clock
+ 
   always begin
     #1 clk = ~clk;
   end
 
-  // Khởi tạo
+  
   initial begin
     $dumpfile("testbench.vcd");
     $dumpvars(0, testbench);
@@ -47,18 +47,18 @@ module testbench();
     #5 enable <= 1'b1;
   end
   
-  // Kiểm tra khi ready được kích hoạt
+  
   always @(posedge ready) begin
     if (data_out != data_in) begin
       $display("FAIL: rx data %x does not match tx %x", data_out, data_in);
       $finish();
     end else begin
-      if (data_out == 8'b11111111) begin  // Kiểm tra dữ liệu đã nhận là 11111111
+      if (data_out == 8'b11111111) begin 
         $display("SUCCESS: all bytes verified");
         $finish();
       end
 
-      // Gửi dữ liệu mới
+     
       #10 rstn <= 0;
       #2 rstn <= 1;
       data_in <= data_in + 1'b1;
